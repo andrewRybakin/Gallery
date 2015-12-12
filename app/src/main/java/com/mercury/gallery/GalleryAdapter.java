@@ -30,7 +30,7 @@ public class GalleryAdapter extends BaseAdapter {
     }
 
     public GalleryAdapter(Context c, int screenWidth, int screenHeight) {
-        mContext=new WeakReference<>(c);
+        mContext = new WeakReference<>(c);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         if (screenWidth > screenHeight) {
@@ -40,13 +40,13 @@ public class GalleryAdapter extends BaseAdapter {
             imagesNumHorizontal = 2.5f;
             imagesNumVertical = 4;
         }
-        String[] projection= {MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA};
-        Cursor imagesCursor=c.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection , null, null, null);
-        if(imagesCursor!=null){
-            imagesUri=new Uri[imagesCursor.getCount()];
-            imagesIds=new long[imagesCursor.getCount()];
+        String[] projection = {MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA};
+        Cursor imagesCursor = c.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null, null, null);
+        if (imagesCursor != null) {
+            imagesUri = new Uri[imagesCursor.getCount()];
+            imagesIds = new long[imagesCursor.getCount()];
             imagesCursor.moveToFirst();
-            for(int i=0; i<imagesCursor.getCount(); i++) {
+            for (int i = 0; i < imagesCursor.getCount(); i++) {
                 imagesCursor.moveToPosition(i);
                 imagesIds[i] = imagesCursor.getLong(0);
                 imagesUri[i] = Uri.parse(imagesCursor.getString(1));
@@ -98,7 +98,7 @@ public class GalleryAdapter extends BaseAdapter {
             @Override
             protected Bitmap doInBackground(ViewHolder... params) {
                 hld = params[0];
-                hld.image=imagesUri[hld.position];
+                hld.image = imagesUri[hld.position];
                 return getBitmap(imagesIds[hld.position]);
             }
 

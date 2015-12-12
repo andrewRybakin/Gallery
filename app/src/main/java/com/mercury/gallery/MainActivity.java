@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setDataAndType(
-                        Uri.fromFile(new File(((GalleryAdapter.ViewHolder)view.getTag()).image.getPath()))
+                        Uri.fromFile(new File(((GalleryAdapter.ViewHolder) view.getTag()).image.getPath()))
                         , "image/*");
                 startActivity(intent);
             }
