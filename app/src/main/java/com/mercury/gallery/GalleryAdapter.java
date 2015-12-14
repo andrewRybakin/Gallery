@@ -1,5 +1,6 @@
 package com.mercury.gallery;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -21,7 +22,8 @@ public class GalleryAdapter extends BaseAdapter {
     private int screenWidth, screenHeight;
     private float imagesNumHorizontal;
     private int imagesNumVertical;
-    private WeakReference<Context> mContext;
+    //private WeakReference<Context> mContext;
+    private ContentResolver mContentResolver;
 
     public static class ViewHolder {
         public ImageView thumb;
@@ -30,7 +32,7 @@ public class GalleryAdapter extends BaseAdapter {
     }
 
     public GalleryAdapter(Context c, int screenWidth, int screenHeight) {
-        mContext = new WeakReference<>(c);
+        mContentResolver = c.getContentResolver();
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         if (screenWidth > screenHeight) {
@@ -89,7 +91,8 @@ public class GalleryAdapter extends BaseAdapter {
         }
 
         ViewHolder holder = (ViewHolder) convertView.getTag();
-        holder.thumb.setImageBitmap(null);
+        //holder.thumb.setImageBitmap(null);
+        holder.thumb.setImageResource(R.drawable.loading);
         holder.position = position;
 
         new AsyncTask<ViewHolder, Void, Bitmap>() {
@@ -113,7 +116,7 @@ public class GalleryAdapter extends BaseAdapter {
 
     private Bitmap getBitmap(long id) {
         return MediaStore.Images.Thumbnails.getThumbnail(
-                mContext.get().getContentResolver(),
+                mContentResolver,
                 id,
                 MediaStore.Images.Thumbnails.MINI_KIND, null
         );
